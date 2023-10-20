@@ -1,0 +1,25 @@
+# https://github.com/devcontainers/templates/blob/main/src/javascript-node-mongo/.devcontainer/docker-compose.yml
+
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    restart: unless-stopped
+    networks:
+      - default
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    environment:
+      MONGODB_HOST: mongodb
+      MONGODB_PORT: 27017
+    networks:
+      - default
+
+networks:
+  default:
